@@ -19,27 +19,6 @@
 #include "sleep2z.h"
 #include <Time.h>
 
-/***************************************************
-  This is a example sketch demonstrating graphic drawing
-  capabilities of the SSD1351 library for the 1.5"
-  and 1.27" 16-bit Color OLEDs with SSD1351 driver chip
-  Pick one up today in the adafruit shop!
-  ------> http://www.adafruit.com/products/1431
-  ------> http://www.adafruit.com/products/1673
-
-  If you're using a 1.27" OLED, change SSD1351HEIGHT in Adafruit_SSD1351.h
-   to 96 instead of 128
-  These display s use SPI to communicate, 4 or 5 pins are required to
-  interface
-  Adafruit invests time and resources providing this open source code,
-  please support Adafruit and open-source hardware by purchasing
-  products from Adafruit!
-  Written by Limor Fried/Ladyada for Adafruit Industries.
-  BSD license, all text above must be included in any redistribution
-  The Adafruit GFX Graphics core library is also required
-  https://github.com/adafruit/Adafruit-GFX-Library
-  Be sure to install it!
- ****************************************************/
 
 // You can use any (4 or) 5 pins
 #define sclk 0
