@@ -83,7 +83,7 @@ void setup(void) {
 }
 
 void loop() {
-  if (health == 0) {
+  if (health <= 1) {
     tft.setCursor(36, 36);
     tft.setTextColor(MAGENTA);
     tft.setTextSize(1);
@@ -93,6 +93,7 @@ void loop() {
   }
 
   while (isNight()) {
+    healthFunc();
     if (prevSleep == false) {
       prevSleep = true;
       initSleep = millis();
@@ -117,7 +118,8 @@ void loop() {
     }
   }
   while (!isNight()) {
-    if (health == 0) {
+    healthFunc();
+    if (health <= 1) {
       tft.fillScreen(BLACK);
       tft.setCursor(36, 36);
       tft.setTextColor(MAGENTA);
@@ -130,14 +132,12 @@ void loop() {
       prevSleep = false;
       finishSleep = millis();
       resting();
-      int hoursSlept = (finishSleep - initSleep) / 60000;
-      if  (hoursSlept < 1) {
-        health = 0;
+      int hoursSlept = (finishSleep - initSleep) / 3600000;
+      int minCompare = health;
+      if (hoursSlept <= 4) {
+        minCompare = health / 4;
       }
-      else {
-        int minCompare = health + hoursSlept * SLEEP_CONST;
-        health = min(minCompare, MAX_HEALTH);
-      }
+      health = min(minCompare, MAX_HEALTH);
     }
     else {
       resting();
@@ -148,7 +148,20 @@ void loop() {
   tft.fillScreen(BLACK);
 
 }
-
+void healthFunc() {
+  digitalWrite(4, LOW);
+  digitalWrite(5, LOW);
+  digitalWrite(6, LOW);
+  if (health >= 50) {
+    digitalWrite(4, HIGH);
+  }
+  else if (health >= 25 && health < 50) {
+    digitalWrite(5, HIGH);
+  }
+  else {
+    digitalWrite(6, HIGH);
+  }
+}
 void resting() {
   tft.drawBitmap(0, 0, restingInverse4, 128, 128, BLACK);
   tft.drawBitmap(0, 0, resting1, 128, 128, BACKGROUND_COLOR);
@@ -283,7 +296,7 @@ void feed() {
     digitalWrite(5, LOW);
     delay(100);
     digitalWrite(6, LOW);
-    int healthNormal = health + health / MAX_HEALTH;
+    int healthNormal = health + health*1.25;
     health = min(healthNormal, MAX_HEALTH);
     tft.drawBitmap(0, 0, nom1, 128, 128, BACKGROUND_COLOR);
     delay(100);
@@ -325,5 +338,4 @@ boolean isNight() {
 
 
 }
-
 
